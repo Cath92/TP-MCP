@@ -41,17 +41,12 @@ def bouger_souris_et_ouvrir_dossier(nom_dossier: str) -> str:
 
 @mcp.tool()
 def dire_bonjour(prenom: str) -> str:
-    """Dit bonjour à une personne à partir de son prénom."""
+    """Dis bonjour à une personne à partir de son prénom."""
     return f"Bonjour {prenom} !"
 
 @mcp.tool()
-def ouvrir_website(url: str) -> str:
-    """
-    Ouvre un site web dans le navigateur par défaut de l'ordinateur.
-    
-    Args:
-        url: L'URL complète du site web à ouvrir (ex: https://www.google.com)
-    """
+def naviguer_website(url: str) -> str:
+    """Va sur le site web dans le navigateur par défaut de l'ordinateur."""
     try:
         # Validation basique ou nettoyage si nécessaire
         if not url.startswith(("http://", "https://")):

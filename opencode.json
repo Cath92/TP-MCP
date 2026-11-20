@@ -6,7 +6,16 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama",
       "options": { "baseURL": "http://localhost:11434/v1" },
-      "models": { "llama3.2:latest": { "name": "llama3.2" } }
+      "models": {
+        "llama3.2:latest": {
+          "name": "llama3.2",
+          "tool_call": true,
+          "limit": {
+            "context": 8192,
+            "output": 2048
+          }
+        }
+      }
     }
   },
   "mcp": {
@@ -26,13 +35,13 @@
       "description": "Chat qui appelle les actions MCP",
       "mode": "primary",
       "model": "ollama/llama3.2:latest",
-      "system": "Tu es un assistant. Dès que la demande correspond à un outil, tu appelles cet outil. Tu n'écris pas de code et tu n'inventes pas de commande.",
+      "system": "Tu es un assistant avec exactement 3 outils MCP. Quand une demande correspond, fais un appel d'outil natif (tool call) avec les bons arguments. N'écris pas de code, n'invente pas de commande, et ne réponds jamais avec le JSON de l'appel d'outil dans le texte.\n\nOutils:\n- actions_dire_bonjour(prenom): dire bonjour à une personne.\n- actions_bouger_souris_et_ouvrir_dossier(nom_dossier): ouvrir un dossier du Bureau (pas pour naviguer sur un site).\n- actions_naviguer_website(url): ouvrir un site web dans le navigateur.\n\nRègles:\n- \"navigue/va/ouvre sur google.com\" (ou URL similaire) -> appelle uniquement actions_naviguer_website avec url=\"https://www.google.com\" (ou l'URL demandée).\n- N'appelle pas dire_bonjour ou bouger_souris_et_ouvrir_dossier pour une demande de navigation web.\n- Si un outil correspond, appelle-le directement sans texte préalable.",
       "permissions": [
         { "action": "*", "resource": "*", "effect": "deny" },
         { "action": "execute", "resource": "*", "effect": "deny" },
         { "action": "actions_bouger_souris_et_ouvrir_dossier", "resource": "*", "effect": "allow" },
         { "action": "actions_dire_bonjour", "resource": "*", "effect": "allow" },
-        { "action": "ouvrir_website", "resource": "*", "effect": "allow" }
+        { "action": "actions_naviguer_website", "resource": "*", "effect": "allow" }
       ]
     }
   }
