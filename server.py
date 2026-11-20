@@ -5,6 +5,8 @@ from pathlib import Path
 import pyautogui
 from mcp.server.mcpserver import MCPServer
 
+import webbrowser
+
 mcp = MCPServer("actions")
 
 
@@ -41,6 +43,29 @@ def bouger_souris_et_ouvrir_dossier(nom_dossier: str) -> str:
 def dire_bonjour(prenom: str) -> str:
     """Dit bonjour à une personne à partir de son prénom."""
     return f"Bonjour {prenom} !"
+
+@mcp.tool()
+def ouvrir_website(url: str) -> str:
+    """
+    Ouvre un site web dans le navigateur par défaut de l'ordinateur.
+    
+    Args:
+        url: L'URL complète du site web à ouvrir (ex: https://www.google.com)
+    """
+    try:
+        # Validation basique ou nettoyage si nécessaire
+        if not url.startswith(("http://", "https://")):
+            url = "https://" + url
+            
+        # Ouvre l'URL dans le navigateur par défaut
+        success = webbrowser.open(url)
+        
+        if success:
+            return f"Le site web {url} a été ouvert avec succès dans le navigateur."
+        else:
+            return f"La commande d'ouverture a été envoyée pour {url}, mais l'état du navigateur est incertain."
+    except Exception as e:
+        return f"Erreur lors de l'ouverture du navigateur : {str(e)}"
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

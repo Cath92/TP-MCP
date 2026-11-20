@@ -31,7 +31,8 @@
         { "action": "*", "resource": "*", "effect": "deny" },
         { "action": "execute", "resource": "*", "effect": "deny" },
         { "action": "actions_bouger_souris_et_ouvrir_dossier", "resource": "*", "effect": "allow" },
-        { "action": "actions_dire_bonjour", "resource": "*", "effect": "allow" }
+        { "action": "actions_dire_bonjour", "resource": "*", "effect": "allow" },
+        { "action": "ouvrir_website", "resource": "*", "effect": "allow" }
       ]
     }
   }
