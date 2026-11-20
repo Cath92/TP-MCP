@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "ollama/llama3.2:latest",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "options": { "baseURL": "http://localhost:11434/v1" },
+      "models": { "llama3.2:latest": { "name": "llama3.2" } }
+    }
+  },
+  "mcp": {
+    "servers": {
+      "actions": {
+        "type": "local",
+        "command": [
+          "C:\\Users\\orsys\\exo-mcp\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\orsys\\exo-mcp\\server.py"
+        ],
+        "codemode": false
+      }
+    }
+  },
+  "agents": {
+    "exo": {
+      "description": "Chat qui appelle les actions MCP",
+      "mode": "primary",
+      "model": "ollama/llama3.2:latest",
+      "system": "Tu es un assistant. Dès que la demande correspond à un outil, tu appelles cet outil. Tu n'écris pas de code et tu n'inventes pas de commande.",
+      "permissions": [
+        { "action": "*", "resource": "*", "effect": "deny" },
+        { "action": "execute", "resource": "*", "effect": "deny" },
+        { "action": "actions_bouger_souris_et_ouvrir_dossier", "resource": "*", "effect": "allow" },
+        { "action": "actions_dire_bonjour", "resource": "*", "effect": "allow" }
+      ]
+    }
+  }
+}
